@@ -1,46 +1,18 @@
-console.log('hello world');
-
-const products = [{
-  name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-  image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-  rating: {
-    stars: 4.5,
-    count:87
-  },
-  priceCents: 1090,
-  quantity: 1
-}, {
-  name: "Intermediate Size Basketball",
-  image: "images/products/intermediate-composite-basketball.jpg",
-  rating: {
-    stars: 4.0,
-    count: 127
-  },
-  priceCents: 2095,
-  quantity: 1
-}, {
-  name: "Adults Plain Cotton T-Shirt - 2 Pack",
-  image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
-  rating: {
-    stars: 4.5,
-    count: 56
-  },
-  priceCents: 799,
-  quantity: 1
-}];
-
-
-
-
-
-
-
-
 let productHTML = '';
-
-
-
-
+// Assuming products is an array of product objects
+// Example structure of a product object:
+  /*
+  {
+    name: "Product Name",
+    image: "path/to/image.jpg",
+    rating: {
+      stars: 4.5,
+      count: 100
+    },
+    priceCents: 1999,
+    quantity: 1
+  }
+  */
 
 products.forEach((product) => {
   productHTML += `
