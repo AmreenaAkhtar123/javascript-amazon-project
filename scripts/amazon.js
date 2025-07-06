@@ -1,3 +1,5 @@
+import {cart} from '../data/cart.js';
+
 let productHTML = '';
 // Assuming products is an array of product objects
 // Example structure of a product object:
