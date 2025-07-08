@@ -1,4 +1,6 @@
-import {cart, removeFromCart, calculateCartQuantity, updateQuantity} from '../data/cart.js';
+import {cart, removeFromCart, calculateCartQuantity,
+  updateQuantity
+} from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatCurrency } from './utlis/money.js';
 
@@ -32,7 +34,7 @@ cart.forEach((cartItem)=>{
 
       <div class="cart-item-details">
         <div class="product-name">
-          Intermediate Size Basketball
+          ${matchingProduct.name}
         </div>
         <div class="product-price">
           $${formatCurrency(matchingProduct.priceCents)}
@@ -47,7 +49,6 @@ cart.forEach((cartItem)=>{
             Update
           </span>
 
-
           <input class="quantity-input js-quantity-input-${matchingProduct.id}">
 
 
@@ -57,6 +58,7 @@ cart.forEach((cartItem)=>{
           <span class="save-quantity-link link-primary js-save-link"
           data-product-id="${matchingProduct.id}">Save
           </span>
+
 
           <span class="delete-quantity-link link-primary js-delete-link" data-product-id= "${matchingProduct.id}" >
             Delete
@@ -140,11 +142,13 @@ document.querySelectorAll(`.js-delete-link`).forEach((link)=>{
 });
 
 function updateCartQuantity(){
-
+  
   const cartQuantity = calculateCartQuantity();
+
 
   document.querySelector(`.js-return-to-home-link`).innerHTML = `${cartQuantity} items`;
 }
+
 
 updateCartQuantity();
 
