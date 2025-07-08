@@ -3,6 +3,7 @@ import {products} from '../data/products.js';
 import { formatCurrency } from './utlis/money.js';
 
 
+
 let cartSummaryHTML = '';
 
 cart.forEach((cartItem)=>{
@@ -16,7 +17,6 @@ cart.forEach((cartItem)=>{
       matchingProduct = product;
     }
   });
-
 
   //console.log(matchingProduct);
   cartSummaryHTML += `
@@ -39,15 +39,20 @@ cart.forEach((cartItem)=>{
         </div>
         <div class="product-quantity">
           <span>
-            Quantity: <span class="quantity-label">${cartItem.quantity}</span>
-          </span>
+            Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">
+  ${cartItem.quantity}
+</span>
           <span class="update-quantity-link link-primary js-update-link"
           data-product-id="${matchingProduct.id}">
             Update
           </span>
 
 
-          <input class="quantity-input" js-quantity-input-${matchingProduct.id}">
+          <input class="quantity-input js-quantity-input-${matchingProduct.id}">
+
+
+
+
 
           <span class="save-quantity-link link-primary js-save-link"
           data-product-id="${matchingProduct.id}">Save
@@ -193,5 +198,11 @@ document.querySelectorAll('.js-save-link')
       const quantityLabel = document.querySelector(
         `.js-quantity-label-${productId}`
       );
+      if (quantityLabel) {
+        quantityLabel.textContent = newQuantity;
+      }
+
+      updateCartQuantity();
+
     });
   });
