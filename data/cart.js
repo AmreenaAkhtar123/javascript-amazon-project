@@ -1,4 +1,5 @@
 export let cart = JSON.parse(localStorage.getItem('cart'));
+import { renderPaymentSummary } from "../scripts/checkout/paymentSummary.js";
 
 
 if (!cart){
@@ -89,6 +90,7 @@ export function updateQuantity(productId, newQuantity) {
   matchingItem.quantity = newQuantity;
 
   saveToStorage();
+  renderPaymentSummary();
 }
 
 export function updateDeliveryOption(productId, deliveryOptionId){
