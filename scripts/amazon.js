@@ -111,10 +111,10 @@ let addedMessageTimeoutId;
         addedMessage.classList.remove('added-to-cart-visible');
       }, 2000);
 
-      console.log(cartQuantity);
+      //console.log(cartQuantity);
 
 
-      console.log(cart);
+      //console.log(cart);
 
 
 }
