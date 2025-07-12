@@ -34,6 +34,11 @@ export function renderOrderSummary(){
     const deliveryOptionId = cartItem.deliveryOptionId;
 
     const deliveryOption = getDeliveryOption(deliveryOptionId);
+    if (!deliveryOption) {
+      console.error(`❌ Delivery option not found for ID: ${deliveryOptionId}`);
+      return;
+    }
+
 
 
 
@@ -51,7 +56,9 @@ export function renderOrderSummary(){
     //console.log(matchingProduct);
     cartSummaryHTML += `
 
-    <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
+    <div class="cart-item-container 
+    js-cart-item-container
+    js-cart-item-container-${matchingProduct.id}">
       <div class="delivery-date">
         Delivery date: ${dateString}
       </div>
@@ -67,7 +74,7 @@ export function renderOrderSummary(){
           <div class="product-price">
             $${formatCurrency(matchingProduct.priceCents)}
           </div>
-          <div class="product-quantity">
+          <div class="product-quantity js-product-quantity-${matchingProduct.id}">
             <span>
               Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">
     ${cartItem.quantity}
@@ -88,7 +95,8 @@ export function renderOrderSummary(){
             </span>
 
 
-            <span class="delete-quantity-link link-primary js-delete-link" data-product-id= "${matchingProduct.id}" >
+            <span class="delete-quantity-link link-primary js-delete-link
+            js-delete-link-${matchingProduct.id}" data-product-id= "${matchingProduct.id}" >
               Delete
             </span>
           </div>
@@ -258,11 +266,15 @@ document.querySelectorAll('.js-save-link')
 
 
 function updateCartQuantity(){
-  
   const cartQuantity = calculateCartQuantity();
 
+  const quantityElement = document.querySelector(`.js-return-to-home-link`);
+  if (!quantityElement) {
+    console.warn('⚠️ .js-return-to-home-link not found.');
+    return;
+  }
 
-  document.querySelector(`.js-return-to-home-link`).innerHTML = `${cartQuantity} items`;
+  quantityElement.innerHTML = `${cartQuantity} items`;
 }
 
 
