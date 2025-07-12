@@ -4,7 +4,7 @@ import { getDeliveryOption } from "../../data/deliveryOption.js";
 import { formatCurrency } from "../utlis/money.js";
 
 export function renderPaymentSummary(){
-  console.log('working');
+  //console.log('working');
   let productPriceCents = 0;
   let ShippingPriceCents = 0;
 
@@ -19,8 +19,8 @@ export function renderPaymentSummary(){
 
   });
 
-  console.log(productPriceCents/100);
-  console.log(ShippingPriceCents/100);
+  //console.log(productPriceCents/100);
+  //console.log(ShippingPriceCents/100);
 
   const totalBeforeTax = productPriceCents + ShippingPriceCents;
   const taxCents = totalBeforeTax * 0.1;
