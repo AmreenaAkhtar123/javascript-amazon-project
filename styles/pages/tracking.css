@@ -75,7 +75,29 @@
 
 .progress-bar {
   height: 100%;
-  background-color: green;
+  background-color: #008000;
   border-radius: 50px;
   width: 50%;
 }
+
+.progress-label.current-status {
+  font-weight: bold;
+  color: #111;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background-color: #ccc;
+  border-radius: 4px;
+  margin-top: 12px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #008000;
+  transition: width 0.3s ease-in-out;
+  border-radius: 4px;
+}
+

@@ -47,8 +47,10 @@ orderHistory.reverse().forEach((order, index) => {
         <div class="product-name">${product.name}</div>
         <div class="product-delivery-date">Arriving on: ${deliveryDate.toLocaleDateString()}</div>
         <div class="product-quantity">Quantity: ${item.quantity}</div>
-        <button class="buy-again-button button-primary">
-          <img class="buy-again-icon" src="images/icons/buy-again.png">
+        <button class="buy-again-button button-primary js-buy-again-button"
+          data-product-id="${product.id}"
+          data-quantity="${item.quantity}">
+          <img class="buy-again-icon" src="../images/icons/buy-again.png" alt="Buy Again">
           <span class="buy-again-message">Buy it again</span>
         </button>
       </div>
@@ -58,6 +60,7 @@ orderHistory.reverse().forEach((order, index) => {
         </a>
       </div>
     `;
+
   });
 
   orderHTML += `
@@ -65,6 +68,35 @@ orderHistory.reverse().forEach((order, index) => {
     </div> <!-- .order-container -->
   `;
 
+
   ordersGrid.innerHTML += orderHTML;
+  // Attach event listeners to "Buy it again" buttons
+  document.querySelectorAll('.js-buy-again-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const productId = button.dataset.productId;
+      const quantity = Number(button.dataset.quantity);
+
+      let existingItem = cart.find((item) => item.productId === productId);
+
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        cart.push({
+          productId,
+          quantity,
+          deliveryOptionId: '1'
+        });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      // ✅ Immediately update cart quantity on the header
+      updateCartQuantityDisplay();
+
+      // Optional: give user feedback
+      alert('Item added to cart again!');
+    });
+
+  });
 });
-updateCartQuantityDisplay();
+updateCartQuantityDisplay(); // Update cart quantity in header

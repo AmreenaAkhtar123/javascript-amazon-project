@@ -261,8 +261,10 @@ document.querySelectorAll('.js-save-link')
 
     });
   });
+  updateCartQuantity();
 
 }
+
 
 
 function updateCartQuantity(){

@@ -117,8 +117,15 @@ export function renderPaymentSummary(){
     // Redirect
     window.location.href = 'orders.html';
   });
-  document.querySelector('.js-cart-quantity').innerText = cartQuantity;
-  document.querySelector('.js-order-error-message').textContent = 'Your cart is empty. Please add items before placing an order.';
+    const cartQuantityElement = document.querySelector('.js-cart-quantity');
+if (cartQuantityElement) {
+  cartQuantityElement.innerText = cartQuantity;
+}
+
+const orderErrorMessageElement = document.querySelector('.js-order-error-message');
+if (orderErrorMessageElement) {
+  orderErrorMessageElement.textContent = 'Your cart is empty. Please add items before placing an order.';
+}
 
 
   

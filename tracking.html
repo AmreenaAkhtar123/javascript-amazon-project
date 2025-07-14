@@ -45,7 +45,7 @@
 
         <a class="cart-link header-link" href="checkout.html">
           <img class="cart-icon" src="images/icons/cart-icon.png">
-          <div class="cart-quantity">3</div>
+          <div class="cart-quantity js-cart-quantity"></div>
           <div class="cart-text">Cart</div>
         </a>
       </div>
@@ -72,20 +72,17 @@
         <img class="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg">
 
         <div class="progress-labels-container">
-          <div class="progress-label">
-            Preparing
-          </div>
-          <div class="progress-label current-status">
-            Shipped
-          </div>
-          <div class="progress-label">
-            Delivered
-          </div>
+          <div class="progress-label" data-status="Preparing">Preparing</div>
+          <div class="progress-label" data-status="Shipped">Shipped</div>
+          <div class="progress-label" data-status="Delivered">Delivered</div>
         </div>
 
         <div class="progress-bar-container">
-          <div class="progress-bar"></div>
+          <div class="progress-bar js-progress-bar"></div>
         </div>
+
+
+
       </div>
     </div>
 
@@ -96,5 +93,7 @@
       console.log(url.searchParams.get("orderId"));
       console.log(url.searchParams.get("productId"));
     </script>
+
+    <script type="module" src="scripts/tracking.js"></script>
   </body>
 </html>
