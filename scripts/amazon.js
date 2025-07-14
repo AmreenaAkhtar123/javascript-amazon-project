@@ -1,141 +1,118 @@
-import {cart, addToCart, calculateCartQuantity, updateCartQuantityDisplay} from '../data/cart.js';
-import {products} from '../data/products.js';
+import {
+  cart,
+  addToCart,
+  calculateCartQuantity,
+  updateCartQuantityDisplay
+} from '../data/cart.js';
+import { products } from '../data/products.js';
 import { formatCurrency } from './utlis/money.js';
 
-let productHTML = '';
-// Assuming products is an array of product objects
-// Example structure of a product object:
-  /*
-  {
-    name: "Product Name",
-    image: "path/to/image.jpg",
-    rating: {
-      stars: 4.5,
-      count: 100
-    },
-    priceCents: 1999,
-    quantity: 1
-  }
-  */
+const productGrid = document.querySelector('.js-product-grid');
+const searchInput = document.querySelector('.js-search-bar');
+const searchButton = document.querySelector('.js-search-button');
 
+// --- Render Products ---
+function renderProducts(productList) {
+  let productHTML = '';
 
-
-
-
-products.forEach((product) => {
-  productHTML += `
-        <div class="product-container">
-          <div class="product-image-container">
-            <img class="product-image"
-              src="${product.image}">
-          </div>
-
-          <div class="product-name limit-text-to-2-lines">
-            ${product.name}
-          </div>
-
-          <div class="product-rating-container">
-            <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars *10
-              }.png">
-            <div class="product-rating-count link-primary">
-              ${product.rating.count}
-            </div>
-          </div>
-
-          <div class="product-price">
-            $${formatCurrency(product.priceCents)}
-          </div>
-
-          <div class="product-quantity-container">
-            <select class= "js-quantity-selector-${product.id}" >
-              <option selected value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-          </div>
-
-          <div class="product-spacer"></div>
-
-         <div class="added-to-cart js-added-to-cart-${product.id}">
-            <img src="images/icons/checkmark.png">
-            Added
-          </div>
-
-          <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id ="${product.id}">
-            Add to Cart 
-          </button>
+  productList.forEach((product) => {
+    productHTML += `
+      <div class="product-container">
+        <div class="product-image-container">
+          <img class="product-image" src="${product.image}">
         </div>
-  
-  `;
 
-});
+        <div class="product-name limit-text-to-2-lines">
+          ${product.name}
+        </div>
 
+        <div class="product-rating-container">
+          <img class="product-rating-stars"
+            src="images/ratings/rating-${product.rating.stars * 10}.png">
+          <div class="product-rating-count link-primary">
+            ${product.rating.count}
+          </div>
+        </div>
 
-//console.log(productHTML);
-document.querySelector('.js-product-grid').innerHTML = productHTML;
+        <div class="product-price">
+          $${formatCurrency(product.priceCents)}
+        </div>
 
+        <div class="product-quantity-container">
+          <select class="js-quantity-selector-${product.id}">
+            ${[...Array(10).keys()].map(i => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+          </select>
+        </div>
 
-const addedMessageTimeouts = {};
- 
+        <div class="product-spacer"></div>
 
+        <div class="added-to-cart js-added-to-cart-${product.id}">
+          <img src="images/icons/checkmark.png">
+          Added
+        </div>
 
-function updateCartQuantity(productId){
-let addedMessageTimeoutId;
+        <button class="add-to-cart-button button-primary js-add-to-cart"
+          data-product-id="${product.id}">
+          Add to Cart
+        </button>
+      </div>
+    `;
+  });
 
-      const cartQuantity = calculateCartQuantity();
+  productGrid.innerHTML = productHTML;
 
-      document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-      const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
-
-
-      addedMessage.classList.add('added-to-cart-visible');
-
-
-      /*setTimeout(() =>{
-        addedMessage.classList.remove('added-to-cart-visible');
-      },2000);
-      */
-      if (addedMessageTimeoutId) {
-        clearTimeout(addedMessageTimeoutId);
-      }
-
-      const timeoutId = setTimeout(() => {
-        addedMessage.classList.remove('added-to-cart-visible');
-      }, 2000);
-
-      //console.log(cartQuantity);
-
-
-      //console.log(cart);
-
-
+  // Add event listeners after rendering
+  document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+    button.addEventListener('click', () => {
+      const productId = button.dataset.productId;
+      addToCart(productId);
+      showAddedMessage(productId);
+      updateCartQuantityDisplay();
+    });
+  });
 }
 
-document.querySelectorAll('.js-add-to-cart')
-.forEach((button) => {
-    button.addEventListener('click', () => {
-      //console.log(button.dataset)
-      const {productId} = button.dataset;
-      //console.log(productName);
-     
-      addToCart(productId);
-      updateCartQuantity(productId);
+// --- Show "Added to Cart" Message ---
+const addedMessageTimeouts = {};
 
-      
-    });
+function showAddedMessage(productId) {
+  const messageEl = document.querySelector(`.js-added-to-cart-${productId}`);
+  if (!messageEl) return;
 
+  messageEl.classList.add('added-to-cart-visible');
 
+  // Clear existing timeout for this product
+  if (addedMessageTimeouts[productId]) {
+    clearTimeout(addedMessageTimeouts[productId]);
+  }
 
+  // Hide the message after 2 seconds
+  addedMessageTimeouts[productId] = setTimeout(() => {
+    messageEl.classList.remove('added-to-cart-visible');
+  }, 2000);
+}
 
+// --- Search Handling ---
+function handleSearch() {
+  const query = searchInput.value.toLowerCase().trim();
+  const filtered = products.filter(product =>
+    product.name.toLowerCase().includes(query) ||
+    (product.keywords && product.keywords.some(keyword =>
+      keyword.toLowerCase().includes(query)))
+  );
 
-    
+  if (filtered.length === 0) {
+    productGrid.innerHTML = `<p class="no-results">No products found.</p>`;
+  } else {
+    renderProducts(filtered);
+  }
+}
+
+searchButton.addEventListener('click', handleSearch);
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') handleSearch();
 });
+
+// --- Initial Load ---
+renderProducts(products);
 updateCartQuantityDisplay();
