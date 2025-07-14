@@ -235,3 +235,8 @@
 .is-editing-quantity .update-quantity-link {
   display: none;
 }
+
+.js-order-error-message{
+  color: red; 
+  margin-top: 10px;
+}

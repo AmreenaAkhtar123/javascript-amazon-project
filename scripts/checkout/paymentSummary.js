@@ -80,38 +80,46 @@ export function renderPaymentSummary(){
 
   document.querySelector(`.js-payment-summary`).innerHTML = paymentSummaryHTML;
   document.querySelector('.place-order-button')
-    .addEventListener('click', () => {
-      const order = {
-        cart,
-        productPriceCents,
-        ShippingPriceCents,
-        taxCents,
-        totalCents,
-        orderTime: new Date().toISOString()
-      };
+  .addEventListener('click', () => {
+    // 🔍 Check if cart is empty
+    if (cart.length === 0) {
+      alert('Your cart is empty. Please add items before placing an order.');
+      return; // stop further execution
+    }
 
-      // Save for confirmation page if needed
-      localStorage.setItem('orderSummary', JSON.stringify(order));
+    const order = {
+      cart,
+      productPriceCents,
+      ShippingPriceCents,
+      taxCents,
+      totalCents,
+      orderTime: new Date().toISOString()
+    };
 
-      // Save to order history
-      const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
-      orderHistory.push(order);
-      localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+    // Save for confirmation page if needed
+    localStorage.setItem('orderSummary', JSON.stringify(order));
 
-      // Clear the cart data
-      localStorage.removeItem('cart');
-      cart.length = 0;
-      calculateCartQuantity();
+    // Save to order history
+    const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+    orderHistory.push(order);
+    localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
 
-      // ✅ Update cart quantity in the header
-      const cartQuantityEl = document.querySelector('.js-cart-quantity');
-      if (cartQuantityEl) {
-        cartQuantityEl.innerText = '0';
-      }
+    // Clear the cart
+    localStorage.removeItem('cart');
+    cart.length = 0;
 
-      // ✅ Redirect to orders page
-      window.location.href = 'orders.html';
+    // Update cart quantity on header
+    const cartQuantityEl = document.querySelector('.js-cart-quantity');
+    if (cartQuantityEl) {
+      cartQuantityEl.innerText = '0';
+    }
+
+    // Redirect
+    window.location.href = 'orders.html';
   });
+  document.querySelector('.js-cart-quantity').innerText = cartQuantity;
+  document.querySelector('.js-order-error-message').textContent = 'Your cart is empty. Please add items before placing an order.';
+
 
   
 }

@@ -1,7 +1,7 @@
 import { getProduct } from "../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOption.js";
 import { formatCurrency } from "../scripts/utlis/money.js";
-import {cart} from "../data/cart.js"
+import {cart, updateCartQuantityDisplay} from "../data/cart.js"
 
 // Get container
 const ordersGrid = document.querySelector('.orders-grid');
@@ -67,3 +67,4 @@ orderHistory.reverse().forEach((order, index) => {
 
   ordersGrid.innerHTML += orderHTML;
 });
+updateCartQuantityDisplay();
