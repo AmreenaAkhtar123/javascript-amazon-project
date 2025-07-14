@@ -1,0 +1,126 @@
+/* Reset & Base Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f6f6f6;
+  color: #0f1111;
+  padding: 40px 20px;
+}
+
+/* Container */
+.confirmation-container {
+  max-width: 900px;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ddd;
+}
+
+/* Heading */
+.confirmation-container h1 {
+  color: #0f1111;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* Order Details Section */
+.js-order-details {
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* List Styles */
+.js-order-details ul {
+  list-style: none;
+  margin-top: 10px;
+  padding-left: 0;
+}
+
+.js-order-details li {
+  background-color: #f7f7f7;
+  margin-bottom: 16px;
+  padding: 16px 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.js-order-details strong {
+  color: #0f1111;
+  font-size: 16px;
+}
+
+/* Divider */
+.js-order-details hr {
+  margin: 30px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+/* Price Summary */
+.js-order-details p {
+  font-size: 15px;
+  margin: 6px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.js-order-details p strong {
+  font-weight: 600;
+}
+
+.js-order-details p:last-of-type {
+  font-size: 18px;
+  font-weight: bold;
+  color: #b12704; /* Amazon-style red for total */
+}
+
+/* Back to Home Button */
+.back-button {
+  
+  margin-top: 20px;
+  padding: 10px 24px;
+  background-color: #f0c14b; /* Amazon yellow */
+  color: #111;
+  text-decoration: none;
+  border-radius: 8px;
+
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+.button-wrapper {
+  text-align: center;
+  margin-top: 30px;
+}
+
+
+.back-button:hover {
+  background-color: #e2b33b;
+}
+.order-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.order-item img {
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.item-details {
+  flex: 1;
+}

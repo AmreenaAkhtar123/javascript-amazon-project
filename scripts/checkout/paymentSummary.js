@@ -72,11 +72,48 @@ export function renderPaymentSummary(){
       </div>
     </div>
 
-    <button class="place-order-button button-primary">
+    <button class="place-order-button button-primary js-place-order-button">
       Place your order
     </button>
   `;
 
 
   document.querySelector(`.js-payment-summary`).innerHTML = paymentSummaryHTML;
+  document.querySelector('.place-order-button')
+    .addEventListener('click', () => {
+      const order = {
+        cart,
+        productPriceCents,
+        ShippingPriceCents,
+        taxCents,
+        totalCents,
+        orderTime: new Date().toISOString()
+      };
+
+      // Save for confirmation page if needed
+      localStorage.setItem('orderSummary', JSON.stringify(order));
+
+      // Save to order history
+      const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+      orderHistory.push(order);
+      localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+
+      // Clear the cart data
+      localStorage.removeItem('cart');
+      cart.length = 0;
+      calculateCartQuantity();
+
+      // ✅ Update cart quantity in the header
+      const cartQuantityEl = document.querySelector('.js-cart-quantity');
+      if (cartQuantityEl) {
+        cartQuantityEl.innerText = '0';
+      }
+
+      // ✅ Redirect to orders page
+      window.location.href = 'orders.html';
+  });
+
+  
 }
+
+
